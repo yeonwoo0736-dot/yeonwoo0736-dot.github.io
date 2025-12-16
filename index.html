@@ -37,7 +37,7 @@
             background-color: #fff;
             padding: 20px 0;
             border-bottom: 1px solid #eee;
-            position: sticky; /* 스크롤 시 상단에 고정 */
+            position: sticky; 
             top: 0;
             z-index: 1000;
         }
@@ -71,20 +71,20 @@
             transition: color 0.3s ease;
         }
         nav ul li a:hover, nav ul li a.active {
-            color: #888; /* 호버 및 활성 상태 색상 */
+            color: #888;
         }
 
         /* 히어로 섹션 (메인 비주얼) - 나비 배경 적용 */
         .hero {
             position: relative;
-            height: 600px; /* 높이 조정 */
+            height: 600px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: #fff;
             overflow: hidden;
-            background-color: #E0DED7; /* 나비 패턴 로드 전 배경색 (밝은 베이지) */
+            background-color: #E0DED7; 
         }
         .hero-background {
             position: absolute;
@@ -92,12 +92,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* 나비 패턴 이미지와 배경 설정 */
-            background-image: url('https://i.imgur.com/your-butterfly-pattern-image.png'); /* 🦋 실제 나비 패턴 이미지 URL로 변경하세요 */
-            background-size: cover; /* 이미지가 영역을 꽉 채우도록 */
+            /* 나비 패턴 이미지 URL (제공된 이미지와 동일한 느낌) */
+            background-image: url('https://i.imgur.com/G5c8w4T.png'); 
+            background-size: cover; 
             background-position: center;
-            opacity: 0.6; /* 이미지 불투명도 조절 */
-            filter: brightness(0.9); /* 이미지를 약간 어둡게 (베이지 톤 유지) */
+            opacity: 0.8; /* 불투명도 조절 */
+            filter: grayscale(0.2) brightness(0.9); /* 색상 및 밝기 조정 */
             z-index: 1;
         }
         .hero-content {
@@ -105,35 +105,34 @@
             z-index: 2;
             max-width: 800px;
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.2); /* 텍스트 배경을 약간 어둡게 하여 가독성 높임 */
-            border-radius: 8px;
-            padding: 40px;
+            /* 텍스트 가독성을 위한 배경은 제거하고 텍스트 그림자로 처리 */
         }
         .hero h1 {
             font-size: 3.5em;
             margin-bottom: 20px;
             color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* 텍스트 그림자 추가 */
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.8); 
+            letter-spacing: 2px;
         }
         .hero p {
             font-size: 1.3em;
             margin-bottom: 30px;
             font-weight: 300;
             color: #eee;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* 텍스트 그림자 추가 */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7); 
         }
         .hero .btn {
             display: inline-block;
-            background-color: #A0A090; /* 버튼 색상 (차분한 톤) */
+            background-color: #585858; /* 어두운 무채색 버튼 */
             color: #fff;
             padding: 15px 30px;
             text-decoration: none;
             font-size: 1.1em;
-            border-radius: 5px;
+            border-radius: 0; /* 아트선재처럼 각진 버튼 */
             transition: background-color 0.3s ease;
         }
         .hero .btn:hover {
-            background-color: #888870;
+            background-color: #333;
         }
 
         /* 프로젝트 소개 섹션 */
@@ -149,17 +148,22 @@
         }
         .project-details {
             display: flex;
-            flex-wrap: wrap; /* 작은 화면에서 줄바꿈 */
+            flex-wrap: wrap; 
             gap: 40px;
             justify-content: center;
             align-items: flex-start;
         }
         .project-text, .project-image-wrapper {
-            flex: 1; /* 가변 너비 */
-            min-width: 300px; /* 최소 너비 */
+            flex: 1; 
+            min-width: 300px;
         }
         .project-text {
             padding-right: 20px;
+        }
+        .project-text h3 {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1.3em;
+            font-weight: 500;
         }
         .project-text p {
             font-size: 1.1em;
@@ -167,10 +171,10 @@
         }
         .project-image-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 비율 유지 (높이/너비) */
+            padding-bottom: 56.25%; 
             height: 0;
             overflow: hidden;
-            background-color: #ddd; /* 이미지 로드 전 배경색 */
+            background-color: #ddd; 
         }
         .project-image-wrapper img, .project-image-wrapper iframe {
             position: absolute;
@@ -178,13 +182,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 이미지가 잘리지 않게 채움 */
+            object-fit: cover; 
         }
 
         /* 기타 섹션 (갤러리, 자료실 등 유도) */
         .additional-sections {
             padding: 80px 0;
             text-align: center;
+            background-color: #f8f8f8;
         }
         .additional-sections h2 {
             font-size: 2.2em;
@@ -201,13 +206,13 @@
             border: 1px solid #eee;
             padding: 30px;
             width: 300px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-align: left;
         }
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
         }
         .card h3 {
             font-size: 1.5em;
@@ -221,22 +226,22 @@
         }
         .card .btn-small {
             display: inline-block;
-            background-color: #ccc;
-            color: #333;
+            background-color: #585858; /* 카드 버튼도 무채색 */
+            color: #fff;
             padding: 10px 20px;
             text-decoration: none;
             font-size: 0.9em;
-            border-radius: 3px;
+            border-radius: 0;
             transition: background-color 0.3s ease;
         }
         .card .btn-small:hover {
-            background-color: #aaa;
+            background-color: #333;
         }
 
         /* 푸터 (하단) */
         footer {
-            background-color: #333;
-            color: #eee;
+            background-color: #222; /* 어두운 회색 */
+            color: #ccc;
             text-align: center;
             padding: 40px 0;
             margin-top: 50px;
@@ -274,7 +279,7 @@
         <section class="hero">
             <div class="hero-background"></div>
             <div class="hero-content">
-                <h1>The Butterfly Archive</h1>
+                <h1>"The Butterfly Archive"</h1>
                 <p>일본군 '위안부' 피해자들과 함께하는 희망과 치유의 애니메이션 프로젝트</p>
                 <a href="project.html" class="btn">프로젝트 자세히 보기</a>
             </div>
@@ -285,16 +290,16 @@
                 <h2>프로젝트 소개</h2>
                 <div class="project-details">
                     <div class="project-text">
-                        <h3>'The Butterfly Archive'는...</h3>
+                        <h3>프로젝트 개요</h3>
                         <p>이 프로젝트는 일본군 '위안부' 피해자 할머님들의 용기 있는 투쟁에 경의를 표하며, 그분들의 삶에 대한 깊은 이해와 공감을 바탕으로 시작되었습니다.</p>
                         <p>할머님들이 일본 정부에 사과를 요구하며 외치는 목소리와, 그 속에서 피어나는 희망과 치유의 메시지를 담은 노래에 직접 애니메이션을 그려 입히는 작업을 진행합니다.</p>
-                        <p>애니메이션 영상은 시민단체의 유튜브 채널에 업로드될 예정이며, 이를 통해 더 많은 대중에게 이 중요한 역사를 알리고, 함께 연대하는 계기를 마련하고자 합니다.</p>
-                        <p>나아가, 이 프로젝트가 단순한 기록을 넘어 아픔을 치유하고 더 나은 미래를 향한 나비의 날갯짓이 되기를 희망합니다.</p>
+                        <p>최종 영상은 시민단체의 유튜브 채널에 업로드될 예정이며, 이를 통해 더 많은 대중에게 이 중요한 역사를 알리고, 함께 연대하는 계기를 마련하고자 합니다. 이 프로젝트가 단순한 기록을 넘어 아픔을 치유하고 더 나은 미래를 향한 나비의 날갯짓이 되기를 희망합니다.</p>
                         <a href="project.html" class="btn-small">프로젝트 스토리 더 보기</a>
                     </div>
                     <div class="project-image-wrapper">
                         <iframe width="560" height="315" src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </section>
