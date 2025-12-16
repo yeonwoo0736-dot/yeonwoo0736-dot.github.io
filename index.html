@@ -74,7 +74,7 @@
             color: #888; /* 호버 및 활성 상태 색상 */
         }
 
-        /* 히어로 섹션 (메인 비주얼) */
+        /* 히어로 섹션 (메인 비주얼) - 나비 배경 적용 */
         .hero {
             position: relative;
             height: 600px; /* 높이 조정 */
@@ -83,8 +83,8 @@
             justify-content: center;
             text-align: center;
             color: #fff;
-            overflow: hidden; /* 이미지 오버플로우 방지 */
-            background-color: #555; /* 이미지 로드 전 배경색 */
+            overflow: hidden;
+            background-color: #E0DED7; /* 나비 패턴 로드 전 배경색 (밝은 베이지) */
         }
         .hero-background {
             position: absolute;
@@ -92,10 +92,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://via.placeholder.com/1920x800/808080/FFFFFF?text=Project+Hero+Image'); /* 실제 프로젝트 이미지 URL로 변경하세요 */
-            background-size: cover;
+            /* 나비 패턴 이미지와 배경 설정 */
+            background-image: url('https://i.imgur.com/your-butterfly-pattern-image.png'); /* 🦋 실제 나비 패턴 이미지 URL로 변경하세요 */
+            background-size: cover; /* 이미지가 영역을 꽉 채우도록 */
             background-position: center;
-            filter: brightness(0.7); /* 이미지를 약간 어둡게 */
+            opacity: 0.6; /* 이미지 불투명도 조절 */
+            filter: brightness(0.9); /* 이미지를 약간 어둡게 (베이지 톤 유지) */
             z-index: 1;
         }
         .hero-content {
@@ -103,21 +105,26 @@
             z-index: 2;
             max-width: 800px;
             padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2); /* 텍스트 배경을 약간 어둡게 하여 가독성 높임 */
+            border-radius: 8px;
+            padding: 40px;
         }
         .hero h1 {
             font-size: 3.5em;
             margin-bottom: 20px;
             color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* 텍스트 그림자 추가 */
         }
         .hero p {
             font-size: 1.3em;
             margin-bottom: 30px;
             font-weight: 300;
             color: #eee;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* 텍스트 그림자 추가 */
         }
         .hero .btn {
             display: inline-block;
-            background-color: #888; /* 버튼 색상 */
+            background-color: #A0A090; /* 버튼 색상 (차분한 톤) */
             color: #fff;
             padding: 15px 30px;
             text-decoration: none;
@@ -126,7 +133,7 @@
             transition: background-color 0.3s ease;
         }
         .hero .btn:hover {
-            background-color: #666;
+            background-color: #888870;
         }
 
         /* 프로젝트 소개 섹션 */
