@@ -3,141 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE BUTTERFLY ARCHIVE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Butterfly Garden</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 연우님이 주신 벽면 질감 이미지 */
-            --bg-image: url('https://i.ibb.co/p6Y0LpY/17408dd68d0caf0c572ba3bcd64da8e3.jpg');
-            /* 은은한 나비 패턴 */
-            --butterfly: url('https://cdn.pixabay.com/photo/2017/02/08/17/24/fantasy-2049567_1280.jpg');
-            --glass-white: rgba(255, 255, 255, 0.4);
-            --shadow-inner: inset 2px 2px 5px rgba(0,0,0,0.15), inset -2px -2px 5px rgba(255,255,255,0.8);
+            --primary-color: #a29bfe; /* 연보라 나비 느낌 */
+            --accent-color: #74b9ff;
+            --text-color: #ffffff;
         }
 
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            background-color: #a8a69e; /* 이미지의 베이스 컬러 */
-            overflow: hidden;
-            font-family: 'Playfair Display', serif;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            color: var(--text-color);
+            /* 배경 이미지 설정: 나비 테마 */
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                        url('https://images.unsplash.com/photo-1550686041-366ad85a1355?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-attachment: fixed; /* 스크롤 시 배경 고정 */
+            background-position: center;
         }
 
-        /* 배경 레이어: 질감 + 나비 */
-        .bg-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), var(--bg-image);
-            background-size: cover; background-position: center;
-            z-index: -2;
-        }
-        .butterfly-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: var(--butterfly); background-size: cover;
-            opacity: 0.1; mix-blend-mode: overlay; z-index: -1;
-        }
-
-        /* 메인 유리 컨테이너 */
-        .main-frame {
-            position: relative;
-            width: 85vw; max-width: 800px;
-            height: 90vh; max-height: 1000px;
+        /* Navigation */
+        nav { 
             background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px); /* 유리창 효과 */
+            padding: 1rem 10%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: fixed; 
+            width: 100%; 
+            top: 0; 
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        nav .logo { font-size: 1.5rem; font-weight: bold; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 2rem; }
+        nav ul li a { text-decoration: none; color: #fff; font-weight: 500; }
+
+        /* Hero Section */
+        .hero { 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center;
+        }
+        .hero h1 { font-size: 4rem; margin-bottom: 1rem; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.5rem; background: rgba(0,0,0,0.3); padding: 5px 20px; border-radius: 20px; }
+
+        /* Content Container */
+        .container { max-width: 800px; margin: 0 auto; padding: 100px 20px; }
+
+        /* Guestbook Section */
+        section#guestbook {
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(15px);
-            border: 3px solid rgba(255, 255, 255, 0.7);
-            border-radius: 50px;
-            box-shadow: 0 50px 80px rgba(0,0,0,0.3);
-            display: flex; align-items: center; justify-content: center;
-            padding: 20px; box-sizing: border-box;
+            padding: 3rem;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
+        h2 { text-align: center; margin-bottom: 2rem; font-size: 2.5rem; }
 
-        svg { width: 100%; height: 100%; }
-
-        /* 이미지의 칸(Cell) 완벽 재현 */
-        .cell {
-            fill: rgba(255, 255, 255, 0.05);
-            stroke: rgba(255, 255, 255, 0.9);
-            stroke-width: 4;
-            transition: 0.4s;
-            cursor: pointer;
+        .guestbook-form { margin-bottom: 3rem; }
+        .input-group input, .input-group textarea { 
+            width: 100%; padding: 15px; margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none; border-radius: 12px; outline: none; font-size: 1rem;
         }
-        .cell:hover { fill: rgba(255, 255, 255, 0.3); }
-
-        /* 텍스트 디테일 */
-        .label-code { font-size: 11px; fill: rgba(0,0,0,0.4); font-family: monospace; }
-        .menu-title { font-size: 28px; fill: #111; font-weight: 700; }
-        .menu-sub { font-size: 14px; fill: #444; font-family: 'Noto Serif KR', serif; }
-        .main-hero-title { font-size: 36px; fill: #000; letter-spacing: -1.5px; font-weight: 700; line-height: 1.1; }
-        .tag-small { font-size: 10px; fill: rgba(0,0,0,0.4); }
-
-        /* 하단 캡션 */
-        .bottom-tag {
-            position: absolute; bottom: 40px; left: 50px;
-            background: rgba(255, 255, 255, 0.4);
-            padding: 10px 20px; border-radius: 15px;
-            font-size: 11px; color: #222; font-family: monospace;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+        .submit-btn { 
+            background: var(--primary-color); color: white; border: none; 
+            padding: 15px; border-radius: 12px; cursor: pointer; width: 100%; 
+            font-size: 1.1rem; font-weight: bold; transition: 0.3s;
         }
+        .submit-btn:hover { transform: translateY(-3px); background: #8e84fc; }
+
+        .guestbook-item { 
+            background: rgba(0, 0, 0, 0.4); 
+            padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem;
+            border-left: 5px solid var(--primary-color);
+        }
+        .user-info { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: bold; }
+        .date { font-size: 0.8rem; opacity: 0.7; }
+
+        footer { text-align: center; padding: 4rem; opacity: 0.8; }
     </style>
 </head>
 <body>
 
-    <div class="bg-layer"></div>
-    <div class="butterfly-layer"></div>
+    <nav>
+        <div class="logo">🦋 BUTTERFLY</div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#guestbook">Guestbook</a></li>
+        </ul>
+    </nav>
 
-    <div class="main-frame">
-        <svg viewBox="0 0 1000 1300">
-            <a href="index.html">
-                <path class="cell" d="M30,30 L450,30 L400,380 L30,420 Z" />
-                <text x="60" y="80" class="label-code">a index.html</text>
-                <text x="60" y="380" class="tag-small">bpehceni</text>
-            </a>
+    <header class="hero">
+        <h1>Butterfly Dream</h1>
+        <p>나비의 날갯짓처럼 가볍고 신비로운 공간</p>
+    </header>
 
-            <a href="about.html">
-                <path class="cell" d="M480,30 L970,30 L970,230 L460,230 Z" />
-                <text x="500" y="60" class="label-code">a 380, 20</text>
-                <text x="560" y="130" class="menu-title">About</text>
-                <text x="560" y="165" class="menu-sub">Yeonwoo's Story</text>
-            </a>
+    <div class="container">
+        <section id="guestbook">
+            <h2>Guestbook</h2>
+            <div class="guestbook-form">
+                <input type="text" id="userName" class="input-group" placeholder="이름을 알려주세요" style="width: 100%; padding: 15px; border-radius: 12px; border:none; margin-bottom: 10px;">
+                <textarea id="userMessage" rows="4" class="input-group" placeholder="메시지를 남겨주세요" style="width: 100%; padding: 15px; border-radius: 12px; border:none; margin-bottom: 10px;"></textarea>
+                <button class="submit-btn" onclick="addMessage()">나비 편지 보내기</button>
+            </div>
 
-            <a href="project.html">
-                <path class="cell" d="M490,260 L970,260 L750,550 L440,410 Z" />
-                <text x="510" y="290" class="label-code">a 580,570</text>
-                <text x="540" y="360" class="menu-title">Project</text>
-                <text x="540" y="390" class="menu-sub">Anmeil 13, opacity : 6.0</text>
-                <text x="860" y="420" class="tag-small">erepctml</text>
-            </a>
-
-            <path class="cell" d="M30,460 L580,430 L580,780 L30,780 Z" />
-            <text x="60" y="500" class="label-code">a 300,470</text>
-            <text x="70" y="610" class="main-hero-title">THE BUTTERFLY</text>
-            <text x="70" y="660" class="main-hero-title">ARCHIVE</text>
-            <text x="530" y="750" class="tag-small">heonl</text>
-
-            <a href="project.html">
-                <path class="cell" d="M620,450 L970,450 L970,780 L610,610 Z" />
-                <text x="650" y="480" class="label-code">a 980,550</text>
-                <text x="710" y="610" class="menu-title">Project</text>
-                <text x="710" y="640" class="menu-sub">Animation Film</text>
-            </a>
-
-            <a href="gallery.html">
-                <path class="cell" d="M30,810 L410,810 L410,1130 L30,1130 Z" />
-                <text x="60" y="850" class="label-code">a 200,470</text>
-                <text x="110" y="1030" class="menu-title">Gallery</text>
-            </a>
-
-            <a href="archive.html">
-                <path class="cell" d="M440,810 L970,810 L970,1130 L380,1280 Z" />
-                <text x="650" y="1030" class="menu-title">Archive</text>
-            </a>
-        </svg>
-
-        <div class="bottom-tag">
-            a &nbsp; archive.haml<br>
-            httpel:: 255.2583.X6 / 2025
-        </div>
+            <div id="messageList">
+                <div class="guestbook-item">
+                    <div class="user-info">
+                        <span>관리자</span>
+                        <span class="date">2024-05-20</span>
+                    </div>
+                    <p>방문해주셔서 감사합니다. 편하게 흔적을 남겨주세요!</p>
+                </div>
+            </div>
+        </section>
     </div>
 
+    <footer>
+        <p>&copy; 2024 Butterfly Theme. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function addMessage() {
+            const name = document.getElementById('userName').value;
+            const msg = document.getElementById('userMessage').value;
+            const list = document.getElementById('messageList');
+
+            if(!name || !msg) { alert('내용을 입력해주세요!'); return; }
+
+            const div = document.createElement('div');
+            div.className = 'guestbook-item';
+            div.innerHTML = `
+                <div class="user-info">
+                    <span>${name}</span>
+                    <span class="date">${new Date().toLocaleDateString()}</span>
+                </div>
+                <p>${msg}</p>
+            `;
+            list.prepend(div);
+            document.getElementById('userName').value = '';
+            document.getElementById('userMessage').value = '';
+        }
+    </script>
 </body>
 </html>
