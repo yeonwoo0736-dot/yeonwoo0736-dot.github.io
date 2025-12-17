@@ -7,149 +7,135 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 연우님이 주신 실제 질감 배경 이미지 */
+            /* 연우님이 주신 벽면 질감 이미지 */
             --bg-image: url('https://i.ibb.co/p6Y0LpY/17408dd68d0caf0c572ba3bcd64da8e3.jpg');
-            /* 은은한 나비 문양 (질감 위에 겹침) */
+            /* 은은한 나비 패턴 */
             --butterfly: url('https://cdn.pixabay.com/photo/2017/02/08/17/24/fantasy-2049567_1280.jpg');
+            --glass-white: rgba(255, 255, 255, 0.4);
+            --shadow-inner: inset 2px 2px 5px rgba(0,0,0,0.15), inset -2px -2px 5px rgba(255,255,255,0.8);
         }
 
         body, html {
             margin: 0; padding: 0;
             width: 100%; height: 100%;
             display: flex; align-items: center; justify-content: center;
-            background-color: #9c9a93;
+            background-color: #a8a69e; /* 이미지의 베이스 컬러 */
             overflow: hidden;
             font-family: 'Playfair Display', serif;
         }
 
-        /* 1. 배경 설정: 질감 사진 + 나비 문양 겹침 */
-        .full-background {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+        /* 배경 레이어: 질감 + 나비 */
+        .bg-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), var(--bg-image);
-            background-size: cover;
-            background-position: center;
+            background-size: cover; background-position: center;
             z-index: -2;
         }
         .butterfly-layer {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: var(--butterfly);
-            background-size: cover;
-            opacity: 0.1;
-            mix-blend-mode: soft-light;
-            z-index: -1;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: var(--butterfly); background-size: cover;
+            opacity: 0.1; mix-blend-mode: overlay; z-index: -1;
         }
 
-        /* 2. 이미지의 둥근 프레임 재현 */
-        .glass-container {
+        /* 메인 유리 컨테이너 */
+        .main-frame {
             position: relative;
-            width: 90vw;
-            max-width: 800px;
-            height: 90vh;
-            max-height: 1100px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            border-radius: 60px; /* 이미지의 부드러운 곡선 */
-            box-shadow: 0 40px 100px rgba(0,0,0,0.3);
-            padding: 30px;
-            box-sizing: border-box;
+            width: 85vw; max-width: 800px;
+            height: 90vh; max-height: 1000px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 3px solid rgba(255, 255, 255, 0.7);
+            border-radius: 50px;
+            box-shadow: 0 50px 80px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px; box-sizing: border-box;
         }
 
-        svg {
-            width: 100%; height: 100%;
-        }
+        svg { width: 100%; height: 100%; }
 
-        /* 3. 이미지와 똑같은 기하학적 칸(Cell) 디자인 */
+        /* 이미지의 칸(Cell) 완벽 재현 */
         .cell {
-            fill: rgba(255, 255, 255, 0.2);
-            stroke: rgba(255, 255, 255, 0.8);
-            stroke-width: 3;
-            transition: 0.3s;
+            fill: rgba(255, 255, 255, 0.05);
+            stroke: rgba(255, 255, 255, 0.9);
+            stroke-width: 4;
+            transition: 0.4s;
             cursor: pointer;
         }
-        .cell:hover {
-            fill: rgba(255, 255, 255, 0.4);
-        }
+        .cell:hover { fill: rgba(255, 255, 255, 0.3); }
 
-        /* 4. 텍스트 디테일 (이미지와 똑같은 위치와 크기) */
-        .coord { font-size: 11px; fill: rgba(0,0,0,0.5); font-family: monospace; }
-        .menu-title { font-size: 28px; fill: #1a1a1a; font-weight: 700; }
-        .sub-title { font-size: 14px; fill: #444; font-family: 'Noto Serif KR', serif; }
-        .main-title { font-size: 38px; fill: #111; letter-spacing: -1px; line-height: 1.2; }
-        .small-tag { font-size: 10px; fill: rgba(0,0,0,0.4); text-transform: lowercase; }
+        /* 텍스트 디테일 */
+        .label-code { font-size: 11px; fill: rgba(0,0,0,0.4); font-family: monospace; }
+        .menu-title { font-size: 28px; fill: #111; font-weight: 700; }
+        .menu-sub { font-size: 14px; fill: #444; font-family: 'Noto Serif KR', serif; }
+        .main-hero-title { font-size: 36px; fill: #000; letter-spacing: -1.5px; font-weight: 700; line-height: 1.1; }
+        .tag-small { font-size: 10px; fill: rgba(0,0,0,0.4); }
 
-        /* 하단 장식 요소 */
-        .footer-decor {
-            position: absolute;
-            bottom: 40px; left: 50px;
-            background: rgba(255,255,255,0.3);
-            padding: 10px 20px;
-            border-radius: 15px;
-            font-size: 12px;
-            line-height: 1.4;
-            color: #222;
-            border: 1px solid rgba(255,255,255,0.4);
+        /* 하단 캡션 */
+        .bottom-tag {
+            position: absolute; bottom: 40px; left: 50px;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 10px 20px; border-radius: 15px;
+            font-size: 11px; color: #222; font-family: monospace;
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
     </style>
 </head>
 <body>
 
-    <div class="full-background"></div>
+    <div class="bg-layer"></div>
     <div class="butterfly-layer"></div>
 
-    <div class="glass-container">
-        <svg viewBox="0 0 1000 1350">
+    <div class="main-frame">
+        <svg viewBox="0 0 1000 1300">
             <a href="index.html">
-                <path class="cell" d="M30,30 L450,30 L410,400 L30,440 Z" />
-                <text x="60" y="80" class="coord">a index.html</text>
-                <text x="60" y="380" class="small-tag">bpehceni</text>
+                <path class="cell" d="M30,30 L450,30 L400,380 L30,420 Z" />
+                <text x="60" y="80" class="label-code">a index.html</text>
+                <text x="60" y="380" class="tag-small">bpehceni</text>
             </a>
 
             <a href="about.html">
                 <path class="cell" d="M480,30 L970,30 L970,230 L460,230 Z" />
-                <text x="500" y="60" class="coord">a 380, 20</text>
+                <text x="500" y="60" class="label-code">a 380, 20</text>
                 <text x="560" y="130" class="menu-title">About</text>
-                <text x="560" y="165" class="sub-title">Yeonwoo's Story</text>
+                <text x="560" y="165" class="menu-sub">Yeonwoo's Story</text>
             </a>
 
             <a href="project.html">
-                <path class="cell" d="M490,260 L970,260 L750,580 L440,410 Z" />
-                <text x="510" y="295" class="coord">a 580,570</text>
-                <text x="530" y="360" class="menu-title">Project</text>
-                <text x="530" y="390" class="sub-title">Anmeil 13, opacity : 6.0</text>
-                <text x="850" y="420" class="small-tag">erepctml</text>
+                <path class="cell" d="M490,260 L970,260 L750,550 L440,410 Z" />
+                <text x="510" y="290" class="label-code">a 580,570</text>
+                <text x="540" y="360" class="menu-title">Project</text>
+                <text x="540" y="390" class="menu-sub">Anmeil 13, opacity : 6.0</text>
+                <text x="860" y="420" class="tag-small">erepctml</text>
             </a>
 
-            <path class="cell" d="M30,470 L600,430 L590,780 L30,780 Z" />
-            <text x="60" y="500" class="coord">a 300,470</text>
-            <text x="65" y="600" class="main-title">THE BUTTERFLY</text>
-            <text x="65" y="660" class="main-title">ARCHIVE</text>
-            <text x="540" y="750" class="small-tag">heonl</text>
+            <path class="cell" d="M30,460 L580,430 L580,780 L30,780 Z" />
+            <text x="60" y="500" class="label-code">a 300,470</text>
+            <text x="70" y="610" class="main-hero-title">THE BUTTERFLY</text>
+            <text x="70" y="660" class="main-hero-title">ARCHIVE</text>
+            <text x="530" y="750" class="tag-small">heonl</text>
 
             <a href="project.html">
-                <path class="cell" d="M630,450 L970,450 L970,780 L620,620 Z" />
-                <text x="650" y="480" class="coord">a 980,550</text>
-                <text x="700" y="600" class="menu-title">Project</text>
-                <text x="700" y="635" class="sub-title">Animation Film</text>
+                <path class="cell" d="M620,450 L970,450 L970,780 L610,610 Z" />
+                <text x="650" y="480" class="label-code">a 980,550</text>
+                <text x="710" y="610" class="menu-title">Project</text>
+                <text x="710" y="640" class="menu-sub">Animation Film</text>
             </a>
 
             <a href="gallery.html">
                 <path class="cell" d="M30,810 L410,810 L410,1130 L30,1130 Z" />
-                <text x="60" y="845" class="coord">a 200,470</text>
-                <text x="100" y="1030" class="menu-title">Gallery</text>
+                <text x="60" y="850" class="label-code">a 200,470</text>
+                <text x="110" y="1030" class="menu-title">Gallery</text>
             </a>
 
             <a href="archive.html">
-                <path class="cell" d="M440,810 L970,810 L970,1130 L380,1300 Z" />
+                <path class="cell" d="M440,810 L970,810 L970,1130 L380,1280 Z" />
                 <text x="650" y="1030" class="menu-title">Archive</text>
             </a>
         </svg>
 
-        <div class="footer-decor">
+        <div class="bottom-tag">
             a &nbsp; archive.haml<br>
-            httpel:: 255.2583.X6 / hegKu s'eBGUS - 300S
+            httpel:: 255.2583.X6 / 2025
         </div>
     </div>
 
