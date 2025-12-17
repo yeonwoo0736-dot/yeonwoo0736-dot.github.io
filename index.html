@@ -7,140 +7,149 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 1. 사용자가 주신 거친 벽면 질감 배경 이미지 */
+            /* 연우님이 주신 실제 질감 배경 이미지 */
             --bg-image: url('https://i.ibb.co/p6Y0LpY/17408dd68d0caf0c572ba3bcd64da8e3.jpg');
-            /* 2. 은은하게 비치는 나비 패턴 */
-            --butterfly-pattern: url('https://cdn.pixabay.com/photo/2017/02/08/17/24/fantasy-2049567_1280.jpg');
+            /* 은은한 나비 문양 (질감 위에 겹침) */
+            --butterfly: url('https://cdn.pixabay.com/photo/2017/02/08/17/24/fantasy-2049567_1280.jpg');
         }
 
         body, html {
             margin: 0; padding: 0;
             width: 100%; height: 100%;
-            background-color: #b5b5b0;
             display: flex; align-items: center; justify-content: center;
-            font-family: 'Noto Serif KR', serif;
+            background-color: #9c9a93;
             overflow: hidden;
+            font-family: 'Playfair Display', serif;
         }
 
-        /* 배경 레이어: 벽면 질감 사진 */
-        .background-base {
+        /* 1. 배경 설정: 질감 사진 + 나비 문양 겹침 */
+        .full-background {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: var(--bg-image);
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), var(--bg-image);
             background-size: cover;
             background-position: center;
             z-index: -2;
         }
-
-        /* 배경 레이어: 은은한 나비 문양 (반투명하게 겹침) */
         .butterfly-layer {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-image: var(--butterfly-pattern);
+            background-image: var(--butterfly);
             background-size: cover;
-            opacity: 0.15; /* 나비가 은은하게 보이도록 조절 */
-            mix-blend-mode: overlay;
-            pointer-events: none;
+            opacity: 0.1;
+            mix-blend-mode: soft-light;
             z-index: -1;
         }
 
-        /* 메인 기하학 프레임 */
-        .archive-frame {
+        /* 2. 이미지의 둥근 프레임 재현 */
+        .glass-container {
             position: relative;
             width: 90vw;
-            max-width: 900px;
+            max-width: 800px;
             height: 90vh;
-            max-height: 1200px;
-            background: rgba(255, 255, 255, 0.1); /* 유리 효과 */
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            border-radius: 40px;
-            padding: 20px;
+            max-height: 1100px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 60px; /* 이미지의 부드러운 곡선 */
+            box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+            padding: 30px;
             box-sizing: border-box;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
         }
 
         svg {
             width: 100%; height: 100%;
         }
 
-        /* 각 칸(Cell) 디자인 */
+        /* 3. 이미지와 똑같은 기하학적 칸(Cell) 디자인 */
         .cell {
-            fill: rgba(255, 255, 255, 0.1);
-            stroke: rgba(255, 255, 255, 0.7);
+            fill: rgba(255, 255, 255, 0.2);
+            stroke: rgba(255, 255, 255, 0.8);
             stroke-width: 3;
-            transition: all 0.3s ease;
+            transition: 0.3s;
             cursor: pointer;
         }
-
         .cell:hover {
-            fill: rgba(255, 255, 255, 0.3);
+            fill: rgba(255, 255, 255, 0.4);
         }
 
-        /* 텍스트 스타일 */
-        .title-text { font-family: 'Playfair Display', serif; font-size: 45px; fill: #111; }
-        .menu-label { font-family: 'Playfair Display', serif; font-size: 30px; fill: #222; font-weight: 700; }
-        .sub-label { font-family: 'Noto Serif KR', serif; font-size: 15px; fill: #444; }
-        .coord-text { font-size: 10px; fill: rgba(0,0,0,0.5); font-family: monospace; }
+        /* 4. 텍스트 디테일 (이미지와 똑같은 위치와 크기) */
+        .coord { font-size: 11px; fill: rgba(0,0,0,0.5); font-family: monospace; }
+        .menu-title { font-size: 28px; fill: #1a1a1a; font-weight: 700; }
+        .sub-title { font-size: 14px; fill: #444; font-family: 'Noto Serif KR', serif; }
+        .main-title { font-size: 38px; fill: #111; letter-spacing: -1px; line-height: 1.2; }
+        .small-tag { font-size: 10px; fill: rgba(0,0,0,0.4); text-transform: lowercase; }
 
-        /* 하단 장식 바 */
-        .bottom-bar {
+        /* 하단 장식 요소 */
+        .footer-decor {
             position: absolute;
             bottom: 40px; left: 50px;
             background: rgba(255,255,255,0.3);
-            padding: 8px 20px;
+            padding: 10px 20px;
             border-radius: 15px;
             font-size: 12px;
-            color: #333;
-            border: 1px solid rgba(255,255,255,0.5);
+            line-height: 1.4;
+            color: #222;
+            border: 1px solid rgba(255,255,255,0.4);
         }
     </style>
 </head>
 <body>
 
-    <div class="background-base"></div>
+    <div class="full-background"></div>
     <div class="butterfly-layer"></div>
 
-    <div class="archive-frame">
-        <svg viewBox="0 0 1000 1300">
+    <div class="glass-container">
+        <svg viewBox="0 0 1000 1350">
+            <a href="index.html">
+                <path class="cell" d="M30,30 L450,30 L410,400 L30,440 Z" />
+                <text x="60" y="80" class="coord">a index.html</text>
+                <text x="60" y="380" class="small-tag">bpehceni</text>
+            </a>
+
             <a href="about.html">
-                <path class="cell" d="M480,30 L970,30 L970,250 L450,250 Z" />
-                <text x="500" y="60" class="coord-text">a 380, 20</text>
-                <text x="550" y="140" class="menu-label">About</text>
-                <text x="550" y="180" class="sub-label">Yeonwoo's Story</text>
+                <path class="cell" d="M480,30 L970,30 L970,230 L460,230 Z" />
+                <text x="500" y="60" class="coord">a 380, 20</text>
+                <text x="560" y="130" class="menu-title">About</text>
+                <text x="560" y="165" class="sub-title">Yeonwoo's Story</text>
             </a>
 
             <a href="project.html">
-                <path class="cell" d="M480,280 L970,280 L750,580 L420,430 Z" />
-                <text x="500" y="320" class="coord-text">a 580, 570</text>
-                <text x="530" y="420" class="menu-label">Project</text>
+                <path class="cell" d="M490,260 L970,260 L750,580 L440,410 Z" />
+                <text x="510" y="295" class="coord">a 580,570</text>
+                <text x="530" y="360" class="menu-title">Project</text>
+                <text x="530" y="390" class="sub-title">Anmeil 13, opacity : 6.0</text>
+                <text x="850" y="420" class="small-tag">erepctml</text>
             </a>
 
-            <path class="cell" d="M30,450 L580,420 L580,750 L30,750 Z" />
-            <text x="60" y="490" class="coord-text">a 300, 470</text>
-            <text x="60" y="580" class="title-text">THE BUTTERFLY</text>
-            <text x="60" y="650" class="title-text">ARCHIVE</text>
+            <path class="cell" d="M30,470 L600,430 L590,780 L30,780 Z" />
+            <text x="60" y="500" class="coord">a 300,470</text>
+            <text x="65" y="600" class="main-title">THE BUTTERFLY</text>
+            <text x="65" y="660" class="main-title">ARCHIVE</text>
+            <text x="540" y="750" class="small-tag">heonl</text>
 
             <a href="project.html">
-                <path class="cell" d="M620,450 L970,450 L970,750 L620,600 Z" />
-                <text x="650" y="480" class="coord-text">a 980, 550</text>
-                <text x="700" y="580" class="menu-label">Project</text>
+                <path class="cell" d="M630,450 L970,450 L970,780 L620,620 Z" />
+                <text x="650" y="480" class="coord">a 980,550</text>
+                <text x="700" y="600" class="menu-title">Project</text>
+                <text x="700" y="635" class="sub-title">Animation Film</text>
             </a>
 
             <a href="gallery.html">
-                <path class="cell" d="M30,780 L400,780 L400,1100 L30,1100 Z" />
-                <text x="60" y="820" class="coord-text">a 200, 470</text>
-                <text x="100" y="980" class="menu-label">Gallery</text>
+                <path class="cell" d="M30,810 L410,810 L410,1130 L30,1130 Z" />
+                <text x="60" y="845" class="coord">a 200,470</text>
+                <text x="100" y="1030" class="menu-title">Gallery</text>
             </a>
 
             <a href="archive.html">
-                <path class="cell" d="M430,780 L970,780 L970,1100 L350,1250 Z" />
-                <text x="600" y="980" class="menu-label">Archive</text>
+                <path class="cell" d="M440,810 L970,810 L970,1130 L380,1300 Z" />
+                <text x="650" y="1030" class="menu-title">Archive</text>
             </a>
         </svg>
 
-        <div class="bottom-bar">
-            YEONWOO. ARCHIVE.HAML / 2025
+        <div class="footer-decor">
+            a &nbsp; archive.haml<br>
+            httpel:: 255.2583.X6 / hegKu s'eBGUS - 300S
         </div>
     </div>
 
