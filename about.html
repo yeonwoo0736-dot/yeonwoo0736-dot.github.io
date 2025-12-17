@@ -1,12 +1,187 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>자기소개</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | The Butterfly Archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 스타일 (메인 페이지와 통일) */
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f1ea; /* 따뜻한 베이지색 */
+            color: #333;
+            line-height: 1.8;
+        }
+
+        /* 헤더 디자인 */
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            text-decoration: none;
+            color: #222;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+        }
+        nav ul li { margin-left: 25px; }
+        nav ul li a { text-decoration: none; color: #555; font-weight: 500; }
+        nav ul li a.active { color: #222; font-weight: 700; border-bottom: 2px solid #222; }
+
+        /* 자기소개 섹션 레이아웃 */
+        .about-container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 40px;
+            display: flex;
+            gap: 50px;
+            align-items: flex-start;
+        }
+
+        /* 왼쪽: 사진 칸 */
+        .profile-side {
+            flex: 0 0 350px; /* 사진 너비 고정 */
+            position: sticky;
+            top: 120px;
+        }
+        .profile-image {
+            width: 100%;
+            aspect-ratio: 3 / 4; /* 세로형 사진 비율 */
+            background-color: #e0dcd0; /* 사진 없을 때 기본 배경 */
+            border: 1px solid #d1cdbf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 10px 10px 0px rgba(0,0,0,0.05); /* 입체감 선 */
+        }
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-caption {
+            margin-top: 15px;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9em;
+            color: #888;
+            text-align: center;
+        }
+
+        /* 오른쪽: 글 내용 */
+        .text-side {
+            flex: 1;
+        }
+        .text-side h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            margin-top: 0;
+            margin-bottom: 30px;
+            color: #222;
+        }
+        .intro-text p {
+            margin-bottom: 25px;
+            text-align: justify;
+            word-break: keep-all;
+            font-size: 1.05em;
+            font-weight: 300;
+        }
+        .highlight {
+            font-weight: 500;
+            color: #222;
+            background: linear-gradient(transparent 80%, #e9e4d6 20%);
+        }
+
+        /* 하단 푸터 */
+        footer {
+            background: #333;
+            color: #aaa;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 100px;
+            font-size: 0.9em;
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 850px) {
+            .about-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .profile-side {
+                flex: none;
+                width: 100%;
+                max-width: 300px;
+                position: static;
+                margin-bottom: 40px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>안녕하세요, 저는 [yeonwoo0736-dot]입니다.</h1>
-    <p>저는 웹 개발, 디자인 등에 관심이 많습니다.</p>
-    <p><a href="index.html">메인으로 돌아가기</a></p>
+
+<header>
+    <div class="header-content">
+        <a href="index.html" class="logo">The Butterfly Archive</a>
+        <nav>
+            <ul>
+                <li><a href="about.html" class="active">자기소개</a></li>
+                <li><a href="project.html">프로젝트</a></li>
+                <li><a href="gallery.html">갤러리</a></li>
+                <li><a href="archive.html">자료실</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="about-container">
+    <aside class="profile-side">
+        <div class="profile-image">
+            <img src="profile.jpg" alt="연우 프로필 사진"> 
+        </div>
+        <p class="profile-caption">Peace Echo &copy; Yeonwoo</p>
+    </aside>
+
+    <section class="text-side">
+        <h1>About</h1>
+        <div class="intro-text">
+            <p><span class="highlight">안녕하세요. 평화의 메아리로 연대하는 기록자, 연우입니다.</span></p>
+
+            <p>저는 대안학교인 성미산학교에서 초·중·고 과정을 거치며 사회의 다양한 목소리에 귀 기울이는 법을 배웠습니다. 중등 과정에서는 퀴어, 여성, 전쟁, 환경, 이주민 등 우리 사회의 주요한 의제들을 프로젝트로 다루며 공부했습니다. 땅을 일구며 대규모 플랜테이션이 환경에 미치는 영향을 몸소 배우고, 우리가 버린 쓰레기의 행방을 쫓으며 일상의 책임감을 익히기도 했습니다.</p>
+
+            <p>전쟁과 여성에 대한 관심은 포스트중등 과정에서 시작되었습니다. 중등 과정에서는 일본군 '위안부'에 대해 공부하고, 일본 정부의 사죄와 진상규명을 촉구하는 수요시위를 매 학기마다 참여하였습니다. 포스트중등 과정에서는 현장에 가서 목격하고 공부하는 시간들을 가지며 이 문제에 더 깊이 다가갔습니다. 과거에 존재했던 미군기지 집창촌과 성병검사소를 방문했고, 현재도 운영되고 있는 미군기지 앞 기지촌 거리에서 여전히 착취당하는 여성들의 흔적을 발견했습니다. 그 과정 속에서 전쟁의 메커니즘이 현재 우리의 삶과 어떻게 연결되어 있는지 탐구했고, 그 과정에서 국가 폭력과 전쟁 속에서 여성이 어떤 위치에 놓이며 어떻게 '취급'되어 왔는지 목격하며 깊은 문제의식을 느꼈습니다.</p>
+
+            <p>이후 매년 학교에서 수요시위를 주관하고 연대자로 참여하며 착취당한 여성들의 편에서 목소리를 내는 활동을 이어왔습니다. 이러한 배움의 흐름은 포스트중등 과정의 필드워크 프로젝트인 <span class="highlight">"평화의 메아리"</span>로 이어졌습니다. 평화를 향한 우리의 연대가 메아리처럼 울려 퍼져 누군가에게 닿고, 다시 우리에게 메아리가 돌아오길 바라는 마음을 담은 이름입니다. 지난 2년간 매주 목요일과 금요일, 전쟁과 여성인권 박물관에서 근무하며 일본군 '위안부' 문제를 더 많은 사람들에게 알리고자 했습니다. 블로그를 작성하고 나비팔찌 공방을 함께 진행하기도 했으며, 박물관의 굿즈 판매와 SNS 홍보 포스터 제작을 맡아 시민들에게 이 문제를 더 섬세하게 알리는 방법을 익혔습니다.</p>
+
+            <p>어떻게 하면 더 많은 관심을 모을 수 있을지 고민하던 중, 현장의 배움들을 나만의 언어로 담아내어 애니메이션을 그려 SNS에 업로드하기로 했습니다. 작년에 포스트중등에서 작곡, 작사한 노래에 애니메이션을 그려넣어 더욱 손길이 담긴 작품을 공유하고자 합니다. 제가 시작한 손길이 더 길게 뻗어나가길, 그리고 이 페이지에 방문한 당신의 손길이 널리 뻗어나가길 희망합니다.</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2025 The Butterfly Archive. Graduation Project by Yeonwoo.</p>
+</footer>
+
 </body>
 </html>
