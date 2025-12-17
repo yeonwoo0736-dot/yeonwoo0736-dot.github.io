@@ -3,101 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Butterfly Garden</title>
+    <title>My Personal Space</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #a29bfe; /* 연보라 나비 느낌 */
-            --accent-color: #74b9ff;
-            --text-color: #ffffff;
+            --primary-color: #4a90e2;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body { 
-            font-family: 'Noto Sans KR', sans-serif; 
-            color: var(--text-color);
-            /* 배경 이미지 설정: 나비 테마 */
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
-                        url('https://images.unsplash.com/photo-1550686041-366ad85a1355?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-attachment: fixed; /* 스크롤 시 배경 고정 */
-            background-position: center;
-        }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
 
         /* Navigation */
-        nav { 
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px); /* 유리창 효과 */
-            padding: 1rem 10%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            position: fixed; 
-            width: 100%; 
-            top: 0; 
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-        nav .logo { font-size: 1.5rem; font-weight: bold; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        nav { background: #fff; padding: 1rem 10%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        nav .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
         nav ul { display: flex; list-style: none; }
         nav ul li { margin-left: 2rem; }
-        nav ul li a { text-decoration: none; color: #fff; font-weight: 500; }
+        nav ul li a { text-decoration: none; color: var(--text-color); font-weight: 500; transition: 0.3s; }
+        nav ul li a:hover { color: var(--primary-color); }
 
         /* Hero Section */
-        .hero { 
-            height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center;
-        }
-        .hero h1 { font-size: 4rem; margin-bottom: 1rem; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-        .hero p { font-size: 1.5rem; background: rgba(0,0,0,0.3); padding: 5px 20px; border-radius: 20px; }
+        .hero { height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); background-size: cover; color: white; text-align: center; margin-top: 60px; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; }
 
-        /* Content Container */
-        .container { max-width: 800px; margin: 0 auto; padding: 100px 20px; }
+        /* Main Content Container */
+        .container { max-width: 1000px; margin: 4rem auto; padding: 0 20px; }
+        section { margin-bottom: 5rem; }
+        h2 { text-align: center; margin-bottom: 3rem; font-size: 2rem; position: relative; }
+        h2::after { content: ''; display: block; width: 50px; height: 3px; background: var(--primary-color); margin: 10px auto; }
 
         /* Guestbook Section */
-        section#guestbook {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(15px);
-            padding: 3rem;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        h2 { text-align: center; margin-bottom: 2rem; font-size: 2.5rem; }
+        .guestbook-form { background: var(--card-bg); padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        .input-group { margin-bottom: 1rem; }
+        .input-group input, .input-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; font-family: inherit; }
+        .submit-btn { background: var(--primary-color); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; transition: 0.3s; width: 100%; font-size: 1rem; }
+        .submit-btn:hover { background: #357abd; }
 
-        .guestbook-form { margin-bottom: 3rem; }
-        .input-group input, .input-group textarea { 
-            width: 100%; padding: 15px; margin-bottom: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            border: none; border-radius: 12px; outline: none; font-size: 1rem;
-        }
-        .submit-btn { 
-            background: var(--primary-color); color: white; border: none; 
-            padding: 15px; border-radius: 12px; cursor: pointer; width: 100%; 
-            font-size: 1.1rem; font-weight: bold; transition: 0.3s;
-        }
-        .submit-btn:hover { transform: translateY(-3px); background: #8e84fc; }
+        .guestbook-list { list-style: none; }
+        .guestbook-item { background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border-left: 5px solid var(--primary-color); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .guestbook-item .user-info { font-weight: bold; margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
+        .guestbook-item .date { font-size: 0.8rem; color: #888; }
 
-        .guestbook-item { 
-            background: rgba(0, 0, 0, 0.4); 
-            padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem;
-            border-left: 5px solid var(--primary-color);
-        }
-        .user-info { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: bold; }
-        .date { font-size: 0.8rem; opacity: 0.7; }
-
-        footer { text-align: center; padding: 4rem; opacity: 0.8; }
+        /* Footer */
+        footer { text-align: center; padding: 3rem; background: #333; color: white; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">🦋 BUTTERFLY</div>
+        <div class="logo">MY LOGO</div>
         <ul>
             <li><a href="#">Home</a></li>
             <li><a href="#guestbook">Guestbook</a></li>
@@ -105,55 +63,66 @@
     </nav>
 
     <header class="hero">
-        <h1>Butterfly Dream</h1>
-        <p>나비의 날갯짓처럼 가볍고 신비로운 공간</p>
+        <h1>안녕하세요, 반갑습니다!</h1>
+        <p>저의 개인 홈페이지에 오신 것을 환영합니다.</p>
     </header>
 
     <div class="container">
         <section id="guestbook">
             <h2>Guestbook</h2>
             <div class="guestbook-form">
-                <input type="text" id="userName" class="input-group" placeholder="이름을 알려주세요" style="width: 100%; padding: 15px; border-radius: 12px; border:none; margin-bottom: 10px;">
-                <textarea id="userMessage" rows="4" class="input-group" placeholder="메시지를 남겨주세요" style="width: 100%; padding: 15px; border-radius: 12px; border:none; margin-bottom: 10px;"></textarea>
-                <button class="submit-btn" onclick="addMessage()">나비 편지 보내기</button>
+                <div class="input-group">
+                    <input type="text" id="userName" placeholder="이름을 입력하세요">
+                </div>
+                <div class="input-group">
+                    <textarea id="userMessage" rows="4" placeholder="따뜻한 한마디를 남겨주세요"></textarea>
+                </div>
+                <button class="submit-btn" onclick="addMessage()">등록하기</button>
             </div>
 
-            <div id="messageList">
-                <div class="guestbook-item">
+            <ul class="guestbook-list" id="messageList">
+                <li class="guestbook-item">
                     <div class="user-info">
-                        <span>관리자</span>
+                        <span>방문자 1</span>
                         <span class="date">2024-05-20</span>
                     </div>
-                    <p>방문해주셔서 감사합니다. 편하게 흔적을 남겨주세요!</p>
-                </div>
-            </div>
+                    <p>홈페이지 디자인이 정말 깔끔하고 예쁘네요! 자주 놀러오겠습니다.</p>
+                </li>
+            </ul>
         </section>
     </div>
 
     <footer>
-        <p>&copy; 2024 Butterfly Theme. All rights reserved.</p>
+        <p>&copy; 2024 My Website. All rights reserved.</p>
     </footer>
 
     <script>
         function addMessage() {
-            const name = document.getElementById('userName').value;
-            const msg = document.getElementById('userMessage').value;
+            const nameInput = document.getElementById('userName');
+            const messageInput = document.getElementById('userMessage');
             const list = document.getElementById('messageList');
 
-            if(!name || !msg) { alert('내용을 입력해주세요!'); return; }
+            if (nameInput.value.trim() === '' || messageInput.value.trim() === '') {
+                alert('이름과 내용을 모두 입력해주세요!');
+                return;
+            }
 
-            const div = document.createElement('div');
-            div.className = 'guestbook-item';
-            div.innerHTML = `
+            const now = new Date();
+            const dateString = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
+
+            const newItem = document.createElement('li');
+            newItem.className = 'guestbook-item';
+            newItem.innerHTML = `
                 <div class="user-info">
-                    <span>${name}</span>
-                    <span class="date">${new Date().toLocaleDateString()}</span>
+                    <span>${nameInput.value}</span>
+                    <span class="date">${dateString}</span>
                 </div>
-                <p>${msg}</p>
+                <p>${messageInput.value}</p>
             `;
-            list.prepend(div);
-            document.getElementById('userName').value = '';
-            document.getElementById('userMessage').value = '';
+
+            list.prepend(newItem);
+            nameInput.value = '';
+            messageInput.value = '';
         }
     </script>
 </body>
