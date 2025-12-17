@@ -3,126 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Personal Space</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>THE BUTTERFLY ARCHIVE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #4a90e2;
-            --bg-color: #f8f9fa;
-            --text-color: #333;
-            --card-bg: #ffffff;
+            --bg-image: url('https://i.ibb.co/p6Y0LpY/17408dd68d0caf0c572ba3bcd64da8e3.jpg');
+            --butterfly-pattern: url('https://cdn.pixabay.com/photo/2017/02/08/17/24/fantasy-2049567_1280.jpg');
+            --accent-color: rgba(255, 255, 255, 0.7);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background-color: #b5b5b0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Noto Serif KR', serif;
+            overflow: hidden; /* 배경 고정 */
+        }
 
-        /* Navigation */
-        nav { background: #fff; padding: 1rem 10%; display: flex; justify-content: space-between; align-items: center; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        nav .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary-color); }
-        nav ul { display: flex; list-style: none; }
-        nav ul li { margin-left: 2rem; }
-        nav ul li a { text-decoration: none; color: var(--text-color); font-weight: 500; transition: 0.3s; }
-        nav ul li a:hover { color: var(--primary-color); }
+        /* 배경 레이어 */
+        .background-base {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
 
-        /* Hero Section */
-        .hero { height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); background-size: cover; color: white; text-align: center; margin-top: 60px; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; }
-        .hero p { font-size: 1.2rem; opacity: 0.9; }
+        .butterfly-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: var(--butterfly-pattern);
+            background-size: cover;
+            opacity: 0.15;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            z-index: -1;
+        }
 
-        /* Main Content Container */
-        .container { max-width: 1000px; margin: 4rem auto; padding: 0 20px; }
-        section { margin-bottom: 5rem; }
-        h2 { text-align: center; margin-bottom: 3rem; font-size: 2rem; position: relative; }
-        h2::after { content: ''; display: block; width: 50px; height: 3px; background: var(--primary-color); margin: 10px auto; }
+        /* 메인 프레임 */
+        .archive-frame {
+            position: relative;
+            width: 90vw;
+            max-width: 900px;
+            height: 90vh;
+            max-height: 1200px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 40px;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            overflow-y: auto; /* 내용 많아질 경우 대비 */
+        }
 
-        /* Guestbook Section */
-        .guestbook-form { background: var(--card-bg); padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 2rem; }
-        .input-group { margin-bottom: 1rem; }
-        .input-group input, .input-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; font-family: inherit; }
-        .submit-btn { background: var(--primary-color); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; transition: 0.3s; width: 100%; font-size: 1rem; }
-        .submit-btn:hover { background: #357abd; }
+        /* 스크롤바 숨기기 */
+        .archive-frame::-webkit-scrollbar { display: none; }
 
-        .guestbook-list { list-style: none; }
-        .guestbook-item { background: white; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; border-left: 5px solid var(--primary-color); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .guestbook-item .user-info { font-weight: bold; margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
-        .guestbook-item .date { font-size: 0.8rem; color: #888; }
+        svg { width: 100%; height: auto; display: block; }
 
-        /* Footer */
-        footer { text-align: center; padding: 3rem; background: #333; color: white; }
+        /* 셀 디자인 */
+        .cell {
+            fill: rgba(255, 255, 255, 0.05);
+            stroke: var(--accent-color);
+            stroke-width: 2;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .cell:hover { fill: rgba(255, 255, 255, 0.2); stroke: #fff; }
+
+        /* 텍스트 스타일 */
+        .title-text { font-family: 'Playfair Display', serif; font-size: 45px; fill: #111; pointer-events: none; }
+        .menu-label { font-family: 'Playfair Display', serif; font-size: 30px; fill: #111; font-weight: 700; pointer-events: none; }
+        .sub-label { font-family: 'Noto Serif KR', serif; font-size: 15px; fill: #333; pointer-events: none; }
+        .coord-text { font-size: 10px; fill: rgba(0,0,0,0.4); font-family: monospace; pointer-events: none; }
+
+        /* 방명록 입력 영역 (Archive 셀 하단에 숨겨진 느낌으로 배치) */
+        .guestbook-overlay {
+            margin-top: -150px; /* SVG 위치와 겹치게 조정 */
+            padding: 40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .guestbook-input {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .guestbook-input input, .guestbook-input textarea {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .guestbook-btn {
+            background: #111;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .message-list {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #111;
+            font-size: 14px;
+            color: #111;
+        }
+
+        .bottom-bar {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #222;
+        }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">MY LOGO</div>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#guestbook">Guestbook</a></li>
-        </ul>
-    </nav>
+    <div class="background-base"></div>
+    <div class="butterfly-layer"></div>
 
-    <header class="hero">
-        <h1>안녕하세요, 반갑습니다!</h1>
-        <p>저의 개인 홈페이지에 오신 것을 환영합니다.</p>
-    </header>
+    <div class="archive-frame">
+        <svg viewBox="0 0 1000 1300">
+            <g onclick="location.href='#about'">
+                <path class="cell" d="M480,30 L970,30 L970,250 L450,250 Z" />
+                <text x="500" y="60" class="coord-text">a 380, 20</text>
+                <text x="550" y="140" class="menu-label">About</text>
+                <text x="550" y="180" class="sub-label">Yeonwoo's Story</text>
+            </g>
 
-    <div class="container">
-        <section id="guestbook">
-            <h2>Guestbook</h2>
-            <div class="guestbook-form">
-                <div class="input-group">
-                    <input type="text" id="userName" placeholder="이름을 입력하세요">
-                </div>
-                <div class="input-group">
-                    <textarea id="userMessage" rows="4" placeholder="따뜻한 한마디를 남겨주세요"></textarea>
-                </div>
-                <button class="submit-btn" onclick="addMessage()">등록하기</button>
+            <g onclick="location.href='#project'">
+                <path class="cell" d="M480,280 L970,280 L750,580 L420,430 Z" />
+                <text x="500" y="320" class="coord-text">a 580, 570</text>
+                <text x="530" y="420" class="menu-label">Project</text>
+            </g>
+
+            <g>
+                <path class="cell" d="M30,450 L580,420 L580,750 L30,750 Z" />
+                <text x="60" y="490" class="coord-text">a 300, 470</text>
+                <text x="60" y="580" class="title-text">THE BUTTERFLY</text>
+                <text x="60" y="650" class="title-text">ARCHIVE</text>
+            </g>
+
+            <g onclick="location.href='#gallery'">
+                <path class="cell" d="M30,780 L400,780 L400,1100 L30,1100 Z" />
+                <text x="60" y="820" class="coord-text">a 200, 470</text>
+                <text x="100" y="980" class="menu-label">Gallery</text>
+            </g>
+
+            <g onclick="document.getElementById('guestbook-input').focus();">
+                <path class="cell" d="M430,780 L970,780 L970,1100 L350,1250 Z" />
+                <text x="600" y="980" class="menu-label">Archive</text>
+                <text x="600" y="1020" class="sub-label">Leave a Message</text>
+            </g>
+        </svg>
+
+        <div class="guestbook-overlay">
+            <div class="guestbook-input">
+                <input type="text" id="userName" placeholder="Name">
+                <textarea id="userMessage" id="guestbook-input" rows="2" placeholder="Write your message..."></textarea>
+                <button class="guestbook-btn" onclick="addMsg()">SEND TO ARCHIVE</button>
             </div>
-
-            <ul class="guestbook-list" id="messageList">
-                <li class="guestbook-item">
-                    <div class="user-info">
-                        <span>방문자 1</span>
-                        <span class="date">2024-05-20</span>
-                    </div>
-                    <p>홈페이지 디자인이 정말 깔끔하고 예쁘네요! 자주 놀러오겠습니다.</p>
-                </li>
-            </ul>
-        </section>
+            <div class="message-list" id="msgList">
+                <div class="message-item"><strong>System</strong>: Welcome to the archive.</div>
+            </div>
+            
+            <div class="bottom-bar">
+                YEONWOO. ARCHIVE.HAML / 2025
+            </div>
+        </div>
     </div>
 
-    <footer>
-        <p>&copy; 2024 My Website. All rights reserved.</p>
-    </footer>
-
     <script>
-        function addMessage() {
-            const nameInput = document.getElementById('userName');
-            const messageInput = document.getElementById('userMessage');
-            const list = document.getElementById('messageList');
+        function addMsg() {
+            const name = document.getElementById('userName').value;
+            const msg = document.getElementById('userMessage').value;
+            const list = document.getElementById('msgList');
 
-            if (nameInput.value.trim() === '' || messageInput.value.trim() === '') {
-                alert('이름과 내용을 모두 입력해주세요!');
-                return;
-            }
+            if(!name || !msg) return alert("Please fill in both fields.");
 
-            const now = new Date();
-            const dateString = `${now.getFullYear()}-${(now.getMonth()+1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
+            const item = document.createElement('div');
+            item.className = 'message-item';
+            item.innerHTML = `<strong>${name}</strong>: ${msg}`;
+            list.prepend(item);
 
-            const newItem = document.createElement('li');
-            newItem.className = 'guestbook-item';
-            newItem.innerHTML = `
-                <div class="user-info">
-                    <span>${nameInput.value}</span>
-                    <span class="date">${dateString}</span>
-                </div>
-                <p>${messageInput.value}</p>
-            `;
-
-            list.prepend(newItem);
-            nameInput.value = '';
-            messageInput.value = '';
+            document.getElementById('userName').value = '';
+            document.getElementById('userMessage').value = '';
         }
     </script>
 </body>
