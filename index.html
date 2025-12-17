@@ -4,132 +4,176 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Butterfly Archive</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #dcdcdc; /* 이미지의 차분한 그레이/베이지 톤 */
-            --line-color: #ffffff;
-            --text-main: #333333;
-        }
-
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            background-color: var(--bg-color);
-            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png'); /* 종이 질감 */
+        /* 1. 기본 설정 및 은은한 나비 배경 */
+        body {
             font-family: 'Noto Serif KR', serif;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-        }
-
-        /* 은은한 나비 배경 레이어 */
-        .butterfly-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://cdn.pixabay.com/photo/2017/02/08/17/24/fantasy-2049567_1280.jpg');
+            margin: 0; padding: 0;
+            background-color: #f5f2eb; /* 이미지의 차분한 베이지 톤 */
+            color: #333;
+            /* 투명한 나비 문양 배경 설정 */
+            background-image: linear-gradient(rgba(245, 242, 235, 0.9), rgba(245, 242, 235, 0.9)), 
+                              url('https://cdn.pixabay.com/photo/2017/02/08/17/24/fantasy-2049567_1280.jpg');
             background-size: cover;
-            opacity: 0.05;
-            z-index: -1;
+            background-attachment: fixed;
         }
 
-        /* 메인 프레임 */
-        .main-frame {
-            position: relative;
-            width: 90vh; height: 90vh; /* 정사각형 프레임 유지 */
-            background: #e0e0e0;
-            box-shadow: inset 10px 10px 20px #bebebe, inset -10px -10px 20px #ffffff;
-            border-radius: 40px;
-            padding: 20px;
-            box-sizing: border-box;
+        /* 2. 헤더 메뉴 */
+        header {
+            padding: 30px 0;
+            text-align: center;
+            background-color: #fff;
+            border-bottom: 1px solid #e0e0e0;
         }
-
-        /* SVG 칸 분할 스타일 */
-        svg {
-            width: 100%; height: 100%;
-            filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.1));
-        }
-
-        .cell {
-            fill: rgba(255, 255, 255, 0.3);
-            stroke: var(--line-color);
-            stroke-width: 4;
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .cell:hover {
-            fill: rgba(255, 255, 255, 0.7);
-        }
-
-        /* 텍스트 요소 */
-        .label {
+        .header-content h1 {
             font-family: 'Playfair Display', serif;
-            font-weight: 700;
-            fill: var(--text-main);
-            pointer-events: none; /* 클릭 방지 */
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: 1.8em; margin: 0; font-weight: 700;
+        }
+        nav ul {
+            list-style: none; padding: 0; margin: 15px 0 0;
+            display: flex; justify-content: center; gap: 30px;
+        }
+        nav ul li a {
+            text-decoration: none; color: #555; font-size: 0.9em; font-weight: 500;
         }
 
-        .time-text {
-            font-size: 80px;
-            fill: #fff;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        /* 3. 상단 메인 비주얼 (Hero Section) */
+        .hero {
+            position: relative;
+            max-width: 1000px; margin: 40px auto;
+            height: 500px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .hero-img {
+            width: 100%; height: 100%;
+            background-image: url('https://cdn.pixabay.com/photo/2017/02/08/17/24/fantasy-2049567_1280.jpg'); /* 나비 이미지 */
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.6);
+        }
+        .hero-overlay {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center; color: #fff; width: 80%;
+        }
+        .hero-overlay h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5em; margin: 0;
+        }
+        .hero-overlay p {
+            font-size: 1.2em; margin: 20px 0; font-weight: 300;
+        }
+        .btn-main {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #fff; color: #333;
+            text-decoration: none; font-size: 0.9em;
+            border-radius: 2px;
         }
 
-        /* 하단 바 디자인 요소 */
-        .bottom-deco {
-            position: absolute;
-            bottom: 40px; left: 40px;
-            width: 250px; height: 60px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 10px;
-            display: flex; align-items: center; padding-left: 20px;
-            font-size: 12px; color: #666;
-            box-shadow: 5px 5px 10px rgba(0,0,0,0.05);
+        /* 4. 프로젝트 간략 소개 섹션 */
+        .intro {
+            max-width: 800px; margin: 60px auto;
+            padding: 0 20px;
+        }
+        .intro h3 {
+            font-size: 1.8em; border-bottom: 2px solid #333;
+            display: inline-block; padding-bottom: 5px; margin-bottom: 30px;
+        }
+        .intro-flex {
+            display: flex; gap: 40px; align-items: flex-start;
+        }
+        .intro-text { flex: 1; font-size: 1.05em; line-height: 1.8; }
+        .intro-video { flex: 1; background: #ddd; aspect-ratio: 16/9; }
+
+        /* 5. 하단 2단 카드 섹션 */
+        .bottom-sections {
+            max-width: 1000px; margin: 80px auto;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+            padding: 0 20px;
+        }
+        .card {
+            background: #fff; padding: 40px;
+            text-align: center; border: 1px solid #eee;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        }
+        .card h4 { font-size: 1.5em; margin-bottom: 15px; }
+        .card p { color: #777; font-size: 0.95em; margin-bottom: 25px; }
+        .btn-card {
+            display: inline-block; padding: 10px 25px;
+            border: 1px solid #ccc; color: #555;
+            text-decoration: none; font-size: 0.9em;
         }
 
+        /* 6. 푸터 */
+        footer {
+            background: #333; color: #fff;
+            text-align: center; padding: 30px 0;
+            font-size: 0.8em; letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="butterfly-bg"></div>
-
-    <div class="main-frame">
-        <svg viewBox="0 0 1000 1000">
-            <a href="index.html">
-                <path class="cell" d="M20,20 L350,20 L300,400 L20,450 Z" />
-                <text x="60" y="380" class="label time-text">3:14</text>
-            </a>
-
-            <a href="about.html">
-                <path class="cell" d="M370,20 L580,20 L550,550 L320,400 Z" />
-                <text x="400" y="80" class="label" style="font-size: 24px;">About</text>
-                <text x="400" y="110" class="label" style="font-size: 14px; opacity: 0.6;">Yeonwoo's Story</text>
-            </a>
-
-            <a href="project.html">
-                <path class="cell" d="M600,20 L980,20 L980,500 L570,550 Z" />
-                <text x="630" y="80" class="label" style="font-size: 24px;">Project</text>
-                <text x="630" y="110" class="label" style="font-size: 12px; opacity: 0.5;">The Butterfly Archive</text>
-            </a>
-
-            <a href="gallery.html">
-                <path class="cell" d="M20,470 L280,420 L500,700 L500,980 L20,980 Z" />
-                <text x="60" y="900" class="label" style="font-size: 24px;">Gallery</text>
-            </a>
-
-            <a href="archive.html"> <path class="cell" d="M520,570 L980,520 L980,980 L520,980 Z" />
-                <text x="560" y="900" class="label" style="font-size: 24px;">Archive / Contact</text>
-            </a>
-
-            <text x="950" y="850" class="label" style="font-size: 12px; writing-mode: vertical-rl; opacity: 0.3;">UPC: 0707883257434</text>
-        </svg>
-
-        <div class="bottom-deco">
-            WHOEVER™<br>THE BUTTERFLY ARCHIVE ©2025
+    <header>
+        <div class="header-content">
+            <h1>The Butterfly Archive</h1>
+            <nav>
+                <ul>
+                    <li><a href="about.html">자기소개</a></li>
+                    <li><a href="project.html">프로젝트</a></li>
+                    <li><a href="gallery.html">갤러리</a></li>
+                    <li><a href="archive.html">자료실</a></li>
+                </ul>
+            </nav>
         </div>
-    </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-img"></div>
+            <div class="hero-overlay">
+                <h2>'The Butterfly Archive'</h2>
+                <p>일본군 '위안부' 피해자들을 향한 치유의 애니메이션 프로젝트</p>
+                <a href="project.html" class="btn-main">프로젝트 자세히 보기</a>
+            </div>
+        </section>
+
+        <section class="intro">
+            <h3>프로젝트 소개</h3>
+            <div class="intro-flex">
+                <div class="intro-text">
+                    <p>'The Butterfly Archive'는...<br>
+                    일본군 '위안부' 피해자 할머님들의 투쟁과 목소리를 기록하고, 
+                    그 속에 담긴 치유의 가사를 애니메이션으로 시각화한 작업입니다. 
+                    우리의 메아리가 더 널리 퍼지기를 바랍니다.</p>
+                </div>
+                <div class="intro-video">
+                    <div style="display:flex; justify-content:center; align-items:center; height:100%; color:#888;">영상 영역</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bottom-sections">
+            <div class="card">
+                <h4>갤러리</h4>
+                <p>애니메이션 스틸컷 및 제작 과정의 기록들</p>
+                <a href="gallery.html" class="btn-card">보러가기</a>
+            </div>
+            <div class="card">
+                <h4>자료실</h4>
+                <p>관련 연구 자료 및 평화 활동의 아카이브</p>
+                <a href="archive.html" class="btn-card">보러가기</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>ABOUT US | PROJECTS | GALLERY</p>
+        <p>&copy; 2025 THE BUTTERFLY ARCHIVE. ALL RIGHTS RESERVED.</p>
+    </footer>
 
 </body>
 </html>
